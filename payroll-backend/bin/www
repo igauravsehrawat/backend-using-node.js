@@ -3,11 +3,15 @@
 /**
  * Module dependencies.
  */
-
 const debug = require('debug')('payroll-backend:server');
+const dotenvResult = require('dotenv').config();
 const http = require('http');
 const app = require('../app');
 
+if (dotenvResult.error) {
+  console.error('Can not start the app without env variables');
+  process.exit();
+}
 
 /**
  * Normalize a port into a number, string, or false.
