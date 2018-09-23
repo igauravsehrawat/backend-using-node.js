@@ -17,23 +17,23 @@ const options = {
 
 mongoose.connect(connectionUrl, options, (err) => {
   if (err) {
-    console.log('​mongoose connection established', err);
+    console.info('​Mongoose connection established', err);
   }
 });
 
 mongoose.connection.on('connected', (err) => {
   if (err) {
-    console.log('​err', err);
+    console.info('​err', err);
   }
-  console.log('connected');
+  console.info('connected');
 });
 
 mongoose.connection.on('error', (err) => {
-  console.log(`Error in connecting with mongoose ${err}`);
+  console.info(`Error in connecting with mongoose ${err}`);
 });
 
 mongoose.connection.on('disconnected', () => {
-  console.log('Mongoose disconnected.');
+  console.info('Mongoose disconnected.');
 });
 
 module.exports = mongoose;
