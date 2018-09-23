@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const {
   db, user, password, host, port,
-} = require('./config').mongoProps;
+} = require('./config');
 
 mongoose.Promise = require('bluebird');
 
@@ -36,6 +36,4 @@ mongoose.connection.on('disconnected', () => {
   console.log('Mongoose disconnected.');
 });
 
-module.exports = {
-  mongoose,
-};
+module.exports = mongoose;

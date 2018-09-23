@@ -6,6 +6,4 @@ const mongoProps = {
   port: process.env.MONGO_DB_PORT,
 };
 
-module.exports = {
-  mongoProps,
-};
+module.exports = mongoProps;
