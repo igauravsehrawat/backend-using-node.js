@@ -5,6 +5,8 @@ const moment = require('moment');
 
 const WorkLog = require('../../models/WorkLog');
 
+const sendResponse = require('../../helpers/sendReponse');
+
 const csvParserOptions = {
   ltrim: true,
 };
@@ -34,7 +36,7 @@ const uploadReport = async (req, res) => {
   const fileContent = await fs.readFileAsync(req.file.path, 'utf8');
   const parsedCSV = await csvParser(fileContent, csvParserOptions);
   const docs = await docsToInsert(parsedCSV);
-  res.status(200).send(docs);
+  return sendResponse(res, 200, docs, 'Report uploaded successfully.');
 };
 
 module.exports = uploadReport;
