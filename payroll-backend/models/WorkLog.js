@@ -17,6 +17,10 @@ const WorkLogSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  reportId: {
+    type: String,
+    required: true,
+  },
 });
 
 const WorkLog = mongoose.model('WorkLog', WorkLogSchema);
