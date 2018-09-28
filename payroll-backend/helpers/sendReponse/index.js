@@ -1,3 +1,14 @@
+/**
+ * @function
+ * This function is to be used for sending response.
+ * Helps in avoiding repetitive code.
+ * DRY: Do not repeat principle
+ *
+ * @param {Object} res the response object coming from middleware
+ * @param {Number} statusCode HTTP status code
+ * @param {Object} data data to send
+ * @param {String} message constructive message
+ */
 
 const sendResponse = (res, statusCode, data = {}, message) => {
   let status = 'Failure';
