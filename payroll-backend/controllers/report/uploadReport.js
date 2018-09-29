@@ -10,6 +10,19 @@ const csvParserOptions = {
   ltrim: true,
 };
 
+/**
+ * @api {post} /workLogReports Upload work log report to archive in the DB
+ *
+ * @apiName Upload WorkLog Report
+ * @apiGroup WorkLog Report
+ *
+ * @apiParam {file} a csv file with file's fieldname of `workLogReport`
+ *
+ * @apiSuccess {TODO} todo TODO
+ * @apiSuccess {TODO} todo TODO
+ * @apiVersion 0.1.0
+ */
+
 const uploadReport = async (req, res) => {
   const fileContent = await fs.readFileAsync(req.file.path, 'utf8');
   const parsedCSV = await csvParser(fileContent, csvParserOptions);

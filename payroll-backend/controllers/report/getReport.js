@@ -3,6 +3,19 @@ const { validationResult } = require('express-validator/check');
 const doesReportIdExist = require('../../validators/doesReportIdExist');
 const sendResponse = require('../../helpers/sendReponse');
 
+/**
+ * @api {get} /payrollReports Get the payroll data by report id
+ *
+ * @apiName Get payroll report
+ * @apiGroup Payroll Report
+ *
+ * @apiParam {String} reportId Payroll report to generate for.
+ *
+ * @apiSuccess {TODO} todo TODO
+ * @apiSuccess {TODO} todo TODO
+ * @apiVersion 0.1.0
+ */
+
 const getReport = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
