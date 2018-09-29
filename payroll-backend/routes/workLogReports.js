@@ -1,9 +1,8 @@
 const express = require('express');
 const multer = require('multer');
-const { check } = require('express-validator/check');
 
 const router = express.Router();
-const { getReport, uploadReport } = require('../controllers/report');
+const { uploadReport } = require('../controllers/workLogreports');
 const { fileValidator } = require('../middlewares/uploadReport');
 
 const fileFilter = (req, file, cb) => {
@@ -18,12 +17,6 @@ const upload = multer({
   fileFilter,
 });
 
-router.get(
-  '/', [
-    check('reportId', 'Report Id must be provided').not().isEmpty(),
-  ],
-  getReport,
-);
 router.post('/', upload.single('workLogReport'), fileValidator, uploadReport);
 
 module.exports = router;
