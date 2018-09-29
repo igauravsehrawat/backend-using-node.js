@@ -13,7 +13,10 @@ const csvParserOptions = {
 const uploadReport = async (req, res) => {
   const fileContent = await fs.readFileAsync(req.file.path, 'utf8');
   const parsedCSV = await csvParser(fileContent, csvParserOptions);
-  const reportIdExist = await doesReportIdExist(parsedCSV);
+  const rowsCount = parsedCSV.length;
+  const lastRowIndex = rowsCount - 1;
+  const reportId = parsedCSV[lastRowIndex][1];
+  const reportIdExist = await doesReportIdExist(reportId);
   if (reportIdExist) {
     return sendResponse(
       res,
