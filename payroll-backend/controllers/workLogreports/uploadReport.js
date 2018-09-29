@@ -25,6 +25,7 @@ const csvParserOptions = {
 
 const uploadReport = async (req, res) => {
   const fileContent = await fs.readFileAsync(req.file.path, 'utf8');
+  await fs.unlinkAsync(req.file.path);
   const parsedCSV = await csvParser(fileContent, csvParserOptions);
   const rowsCount = parsedCSV.length;
   const lastRowIndex = rowsCount - 1;
