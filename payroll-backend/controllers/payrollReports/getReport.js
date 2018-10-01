@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator/check');
 
 const doesReportIdExist = require('../../validators/doesReportIdExist');
 const sendResponse = require('../../helpers/sendReponse');
+const { generatePayrollReport } = require('../../services/db/WorkLog');
 
 /**
  * @api {get} /payrollReports Get the payroll data by report id
@@ -36,6 +37,13 @@ const getReport = async (req, res, next) => {
       `Report id: ${reportId}, does not exists.`,
     );
   }
+  const payrollReport = await generatePayrollReport();
+  return sendResponse(
+    res,
+    200,
+    payrollReport,
+    'Payroll generated successfull',
+  );
 };
 
 module.exports = getReport;

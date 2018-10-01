@@ -40,3 +40,5 @@ prefillDataForJobRates()
     console.error('err', err);
     process.exit();
   });
+
+module.exports = prefillDataForJobRates;
