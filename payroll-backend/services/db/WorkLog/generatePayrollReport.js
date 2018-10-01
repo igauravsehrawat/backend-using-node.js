@@ -33,6 +33,21 @@ const generateNthOfMonth = (date, n) => {
   return dateNth;
 };
 
+let payrollRow = {
+  employeeId: null,
+  payPeriod: null,
+  amountPaid: null,
+};
+
+const setPayrollRow = (employeeId, payPeriod, amountPaid) => {
+  payrollRow = {
+    employeeId,
+    payPeriod,
+    amountPaid,
+  };
+};
+
+
 const generatePayPeriod = (date) => {
   if (isDateLessOrEqualTo15th(date)) {
     return `${generateNthOfMonth(date, 1)}-${generateNthOfMonth(date, 15)}`;
@@ -41,35 +56,33 @@ const generatePayPeriod = (date) => {
 };
 
 const generatePayrollReport = async () => {
-  const allWorkLogs = await WorkLog.find({}).lean().exec();
+  const sortQuery = {
+    employeeId: 1,
+    date: 1,
+  };
+  const allWorkLogs = await WorkLog.find({ reportId: 46 }).sort(sortQuery).lean().exec();
   const jobGroupRates = await jobGroupRatesMap();
 
-  const employeePayPeriodMap = {};
   const payrollReport = [];
-
-  allWorkLogs.forEach((workLog) => {
+  for (let index = 0, workLogLength = allWorkLogs.length; index < workLogLength; index += 1) {
+    const workLog = allWorkLogs[index];
     const {
-      employeeId, hoursWorked, date, jobGroup,
+      date, employeeId, hoursWorked, jobGroup,
     } = workLog;
     const payPeriod = generatePayPeriod(date);
-    const key = `${employeeId}-${payPeriod}`;
-    if (employeePayPeriodMap[key]) {
-      employeePayPeriodMap[key].amount += hoursWorked * jobGroupRates[jobGroup];
-    } else {
-      employeePayPeriodMap[key] = {
-        employeeId,
-        payPeriod,
-        amount: 0,
-      };
+    // nothing is set initally
+    if (!payrollRow.employeeId && !payrollReport.payPeriod) {
+      setPayrollRow(employeeId, payPeriod, 0);
+    } else if (payrollRow.employeeId !== employeeId || payrollRow.payPeriod !== payPeriod) {
+      // check if there is change, push the existing and set the new
+      payrollReport.push(payrollRow);
+      setPayrollRow(employeeId, payPeriod, 0);
+    } else if (payrollRow.employeeId === employeeId && payrollRow.payPeriod === payPeriod) {
+      // check if it is same
+      payrollReport.amountPaid += hoursWorked * jobGroupRates[jobGroup];
     }
-  });
-
-  Object.keys(employeePayPeriodMap).forEach((key) => {
-    const payrollRow = {
-      ...employeePayPeriodMap[key],
-    };
-    payrollReport.push(payrollRow);
-  });
+  }
+  payrollReport.push(payrollRow);
   return payrollReport;
 };
 
