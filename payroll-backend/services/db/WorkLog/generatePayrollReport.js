@@ -56,12 +56,18 @@ const generatePayPeriod = (date) => {
   return `${generateNthOfMonth(date, 16)} - ${generateNthOfMonth(date, daysInMonth)}`;
 };
 
-const generatePayrollReport = async () => {
+const generatePayrollReport = async (reportId) => {
   const sortQuery = {
     employeeId: 1,
     date: 1,
   };
-  const allWorkLogs = await WorkLog.find({}).sort(sortQuery).lean().exec();
+  let query = {};
+  if (reportId) {
+    query = {
+      reportId,
+    };
+  }
+  const allWorkLogs = await WorkLog.find(query).sort(sortQuery).lean().exec();
   const jobGroupRates = await jobGroupRatesMap();
 
   const report = [];

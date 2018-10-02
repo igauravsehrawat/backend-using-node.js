@@ -37,7 +37,7 @@ const getReport = async (req, res, next) => {
       `Report id: ${reportId}, does not exists.`,
     );
   }
-  const payrollReport = await generatePayrollReport();
+  const payrollReport = await generatePayrollReport(reportId);
   return sendResponse(
     res,
     200,
