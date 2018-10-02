@@ -30,7 +30,7 @@ const generateNthOfMonth = (date, n) => {
     month,
     year,
   });
-  return dateNth;
+  return dateNth.format('DD/MM/YYYY');
 };
 
 let payrollRow = {
@@ -50,9 +50,10 @@ const setPayrollRow = (employeeId, payPeriod, amountPaid) => {
 
 const generatePayPeriod = (date) => {
   if (isDateLessOrEqualTo15th(date)) {
-    return `${generateNthOfMonth(date, 1)}-${generateNthOfMonth(date, 15)}`;
+    return `${generateNthOfMonth(date, 1)} - ${generateNthOfMonth(date, 15)}`;
   }
-  return `${generateNthOfMonth(date, 16)}-${generateNthOfMonth(date, 30)}`;
+  const daysInMonth = moment(date).daysInMonth();
+  return `${generateNthOfMonth(date, 16)} - ${generateNthOfMonth(date, daysInMonth)}`;
 };
 
 const generatePayrollReport = async () => {
@@ -60,10 +61,10 @@ const generatePayrollReport = async () => {
     employeeId: 1,
     date: 1,
   };
-  const allWorkLogs = await WorkLog.find({ reportId: 46 }).sort(sortQuery).lean().exec();
+  const allWorkLogs = await WorkLog.find({}).sort(sortQuery).lean().exec();
   const jobGroupRates = await jobGroupRatesMap();
 
-  const payrollReport = [];
+  const report = [];
   for (let index = 0, workLogLength = allWorkLogs.length; index < workLogLength; index += 1) {
     const workLog = allWorkLogs[index];
     const {
@@ -71,19 +72,17 @@ const generatePayrollReport = async () => {
     } = workLog;
     const payPeriod = generatePayPeriod(date);
     // nothing is set initally
-    if (!payrollRow.employeeId && !payrollReport.payPeriod) {
+    if (!payrollRow.employeeId && !payrollRow.payPeriod) {
       setPayrollRow(employeeId, payPeriod, 0);
     } else if (payrollRow.employeeId !== employeeId || payrollRow.payPeriod !== payPeriod) {
       // check if there is change, push the existing and set the new
-      payrollReport.push(payrollRow);
+      report.push(payrollRow);
       setPayrollRow(employeeId, payPeriod, 0);
-    } else if (payrollRow.employeeId === employeeId && payrollRow.payPeriod === payPeriod) {
-      // check if it is same
-      payrollReport.amountPaid += hoursWorked * jobGroupRates[jobGroup];
     }
+    payrollRow.amountPaid += (hoursWorked * jobGroupRates[jobGroup]);
   }
-  payrollReport.push(payrollRow);
-  return payrollReport;
+  report.push(payrollRow);
+  return report;
 };
 
 module.exports = generatePayrollReport;
