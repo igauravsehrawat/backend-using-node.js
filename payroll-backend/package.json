@@ -13,6 +13,7 @@
     "bluebird": "^3.5.2",
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.4",
     "csv-parse": "^3.0.0",
     "debug": "~4.0.1",
     "dotenv": "^6.0.0",
