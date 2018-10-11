@@ -1,6 +1,6 @@
 const fileValidator = (req, res, next) => {
   if (!req.file || !req.file.fieldname) {
-    throw Error('Please attach a file.');
+    throw Error('Please attach a csv file.');
   }
   next();
 };

@@ -9,6 +9,7 @@ const cors = require('cors');
 const index = require('./routes/index');
 const workLogReports = require('./routes/workLogReports');
 const payrollReports = require('./routes/payrollReports');
+const sendResponse = require('./helpers/sendReponse');
 
 const app = express();
 
@@ -44,8 +45,12 @@ app.use((err, req, res, next) => {
 
   // render the error page
   console.error(err);
-  res.status(err.status || 500);
-  res.render('error');
+  return sendResponse(
+    res,
+    err.status || 500,
+    {},
+    err.message || 'Something went wrong',
+  );
 });
 
 module.exports = app;
