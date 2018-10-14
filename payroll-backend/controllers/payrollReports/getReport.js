@@ -42,7 +42,7 @@ const getReport = async (req, res, next) => {
     res,
     200,
     payrollReport,
-    'Payroll generated successfull',
+    'Payroll generated successfully',
   );
 };
 

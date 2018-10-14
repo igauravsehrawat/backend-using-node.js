@@ -3,7 +3,7 @@ const fs = Promise.promisifyAll(require('fs'));
 const csvParser = Promise.promisify(require('csv-parse'));
 
 const sendResponse = require('../../helpers/sendReponse');
-const { insertReport } = require('../../services/db/WorkLog');
+const { generatePayrollReport, insertReport } = require('../../services/db/WorkLog');
 const { doesReportIdExist } = require('../../validators');
 
 const csvParserOptions = {
@@ -39,8 +39,8 @@ const uploadReport = async (req, res) => {
       'File with given report Id already exists, one report can be uploaded only once.',
     );
   }
-  const docs = await insertReport(parsedCSV);
-  return sendResponse(res, 200, docs, 'Report uploaded successfully.');
+  const report = await insertReport(parsedCSV);
+  return sendResponse(res, 200, report, 'Report uploaded successfully.');
 };
 
 module.exports = uploadReport;

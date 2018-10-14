@@ -4,11 +4,11 @@ const { generatePayrollReport } = require('../../services/db/WorkLog');
 /**
  * @api {get} /payrollReports/all Get all the payroll data
  *
- * @apiName Get payroll report
+ * @apiName Get all payroll reports
  * @apiGroup Payroll Report
  *
- * @apiSuccess {TODO} todo TODO
- * @apiSuccess {TODO} todo TODO
+ * @apiSuccess {TODO} todo TODO:
+ * @apiSuccess {TODO} todo TODO:
  * @apiVersion 0.1.0
  */
 
@@ -18,7 +18,7 @@ const getReport = async (req, res, next) => {
     res,
     200,
     payrollReport,
-    'Payroll generated successfull',
+    'Payroll generated successfully',
   );
 };
 
