@@ -33,19 +33,11 @@ const generateNthOfMonth = (date, n) => {
   return dateNth.format('DD/MM/YYYY');
 };
 
-let payrollRow = {
-  employeeId: null,
-  payPeriod: null,
-  amountPaid: null,
-};
-
-const setPayrollRow = (employeeId, payPeriod, amountPaid) => {
-  payrollRow = {
-    employeeId,
-    payPeriod,
-    amountPaid,
-  };
-};
+const setPayrollRow = (employeeId, payPeriod, amountPaid) => ({
+  employeeId,
+  payPeriod,
+  amountPaid,
+});
 
 
 const generatePayPeriod = (date) => {
@@ -71,6 +63,12 @@ const generatePayrollReport = async (reportId) => {
   const jobGroupRates = await jobGroupRatesMap();
 
   const report = [];
+  let payrollRow = {
+    employeeId: null,
+    payPeriod: null,
+    amountPaid: null,
+  };
+
   for (let index = 0, workLogLength = allWorkLogs.length; index < workLogLength; index += 1) {
     const workLog = allWorkLogs[index];
     const {
@@ -79,15 +77,17 @@ const generatePayrollReport = async (reportId) => {
     const payPeriod = generatePayPeriod(date);
     // nothing is set initally
     if (!payrollRow.employeeId && !payrollRow.payPeriod) {
-      setPayrollRow(employeeId, payPeriod, 0);
+      payrollRow = setPayrollRow(employeeId, payPeriod, 0);
     } else if (payrollRow.employeeId !== employeeId || payrollRow.payPeriod !== payPeriod) {
       // check if there is change, push the existing and set the new
       report.push(payrollRow);
-      setPayrollRow(employeeId, payPeriod, 0);
+      payrollRow = setPayrollRow(employeeId, payPeriod, 0);
     }
     payrollRow.amountPaid += (hoursWorked * jobGroupRates[jobGroup]);
   }
-  report.push(payrollRow);
+  if (allWorkLogs.length > 0) {
+    report.push(payrollRow);
+  }
   return report;
 };
 
