@@ -1,0 +1,6 @@
+node_modules/*
+out/
+doc/
+docs/
+.git/
+.gitignore

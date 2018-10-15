@@ -1,0 +1,31 @@
+version: '3.5'
+services:
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    restart: always
+    volumes:
+      - '/root/data/db:/data/db'
+
+  payroll-backend:
+    image: 'payroll-backend:latest'
+    restart: always
+    ports:
+      - '4242:4242'
+    volumes:
+      - './bin:/opt/app/bin'
+      - './controllers:/opt/app/controllers'
+      - './helpers:/opt/app/helpers'
+      - './middlewares:/opt/app/middlewares'
+      - './models:/opt/app/models'
+      - './public:/opt/app/public'
+      - './routes:/opt/app/routes'
+      - './services:/opt/app/services'
+      - './tests:/opt/app/tests'
+      - './uploads:/opt/app/uploads'
+      - './validators:/opt/app/validators'
+      - './views:/opt/app/views'
+      - './env:/opt/app/.env'
+      - './app.js:/opt/app/app'
+      - './package.json:/opt/app/package'
