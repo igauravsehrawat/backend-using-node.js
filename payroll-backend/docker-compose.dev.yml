@@ -5,10 +5,15 @@ services:
     ports:
       - 27017:27017
     restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: veryhardpassword
     volumes:
       - '/root/data/db:/data/db'
 
   payroll-backend:
+    depends_on:
+      - "mongo"
     image: 'payroll-backend:latest'
     restart: always
     ports:
@@ -26,6 +31,6 @@ services:
       - './uploads:/opt/app/uploads'
       - './validators:/opt/app/validators'
       - './views:/opt/app/views'
-      - './env:/opt/app/.env'
+      - './.env:/opt/app/.env'
       - './app.js:/opt/app/app'
       - './package.json:/opt/app/package'
