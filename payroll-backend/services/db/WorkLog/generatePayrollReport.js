@@ -88,7 +88,12 @@ const generatePayrollReport = async (reportId) => {
   if (allWorkLogs.length > 0) {
     report.push(payrollRow);
   }
-  return report;
+  // TODO: currency is DB with job rates, use it appropriately
+  const currencyFormattedReport = report.map(value => ({
+    ...value,
+    amountPaid: `$${value.amountPaid}`,
+  }));
+  return currencyFormattedReport;
 };
 
 module.exports = generatePayrollReport;
