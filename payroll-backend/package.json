@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "debug": "nodemon --inspect ./bin/www",
     "jsdoc:generate": "jsdoc helpers/*",
-    "apidoc:generate": "apidoc -i controllers/*"
+    "apidoc:generate": "apidoc -i controllers/"
   },
   "dependencies": {
     "apidoc": "^0.17.6",
