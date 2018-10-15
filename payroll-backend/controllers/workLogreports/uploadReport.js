@@ -3,7 +3,7 @@ const fs = Promise.promisifyAll(require('fs'));
 const csvParser = Promise.promisify(require('csv-parse'));
 
 const sendResponse = require('../../helpers/sendReponse');
-const { generatePayrollReport, insertReport } = require('../../services/db/WorkLog');
+const { insertReport } = require('../../services/db/WorkLog');
 const { doesReportIdExist } = require('../../validators');
 
 const csvParserOptions = {
@@ -11,15 +11,51 @@ const csvParserOptions = {
 };
 
 /**
- * @api {post} /workLogReports Upload work log report to archive in the DB
+ * @api {post} /worklog-reports Upload work log report to archive in the DB
  *
  * @apiName Upload WorkLog Report
  * @apiGroup WorkLog Report
  *
  * @apiParam {file} a csv file with file's fieldname of `workLogReport`
  *
- * @apiSuccess {TODO} todo TODO
- * @apiSuccess {TODO} todo TODO
+ * @apiSuccess {String} status Success
+ * @apiSuccess {Array} data Array of object
+ * @apiSuccess {String} message message to display at frontend
+ * @apiSuccessExample
+  {
+      "status": "Success",
+      "data": [
+          {
+              "date": "2016-11-13T18:30:00Z",
+              "hoursWorked": "7.5",
+              "employeeId": "1",
+              "jobGroup": "A",
+              "reportId": "44"
+          },
+          {
+              "date": "2016-11-08T18:30:00Z",
+              "hoursWorked": "4",
+              "employeeId": "2",
+              "jobGroup": "B",
+              "reportId": "44"
+          },
+          {
+              "date": "2016-11-09T18:30:00Z",
+              "hoursWorked": "4",
+              "employeeId": "2",
+              "jobGroup": "B",
+              "reportId": "44"
+          },
+          {
+              "date": "2016-11-08T18:30:00Z",
+              "hoursWorked": "11.5",
+              "employeeId": "3",
+              "jobGroup": "A",
+              "reportId": "44"
+          },
+      ],
+      "message": "Report uploaded successfully."
+  }
  * @apiVersion 0.1.0
  */
 

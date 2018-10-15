@@ -10,7 +10,7 @@ const insertReport = async (parsedCSV) => {
   for (let index = 1; index <= penultimateRowIndex; index += 1) {
     const currentRow = parsedCSV[index];
     const doc = {
-      date: moment(currentRow[0], 'DD/MM/YYYY').utc().format(),
+      date: moment(currentRow[0], 'DD/MM/YYYY'),
       hoursWorked: currentRow[1],
       employeeId: currentRow[2],
       jobGroup: currentRow[3],

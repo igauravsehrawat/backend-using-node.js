@@ -1,0 +1,8 @@
+{
+  "name": "Payroll solutions",
+  "version": "0.1.0",
+  "description": "API documentation to get everyone upto speed.",
+  "title": "API docs",
+  "url" : "http://127.0.0.1:4242",
+  "sampleUrl": "http://127.0.0.1:4242"
+}
