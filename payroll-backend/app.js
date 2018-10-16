@@ -52,7 +52,7 @@ app.use((err, req, res, next) => {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  // console.error(err);
+  console.error(err);
   winstonLogger.error(err);
   Sentry.captureException(err);
   return sendResponse(
