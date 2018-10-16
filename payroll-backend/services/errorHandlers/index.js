@@ -1,4 +1,4 @@
-
+const Sentry = require('./sentry');
 
 /**
  * This is central function to catch error from async function
@@ -14,4 +14,5 @@ const expressErrorHandler = fn => (req, res, next) => fn(req, res, next).catch((
 
 module.exports = {
   expressErrorHandler,
+  Sentry,
 };
