@@ -1,4 +1,5 @@
 const Sentry = require('./sentry');
+const winstonLogger = require('./winstonLogger');
 
 /**
  * This is central function to catch error from async function
@@ -14,5 +15,6 @@ const expressErrorHandler = fn => (req, res, next) => fn(req, res, next).catch((
 
 module.exports = {
   expressErrorHandler,
+  winstonLogger,
   Sentry,
 };
