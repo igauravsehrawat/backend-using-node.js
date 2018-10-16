@@ -10,14 +10,21 @@ const index = require('./routes/index');
 const workLogReports = require('./routes/workLogReports');
 const payrollReports = require('./routes/payrollReports');
 const sendResponse = require('./helpers/sendReponse');
+const { Sentry } = require('./services/errorHandlers');
 
 const app = express();
+
+// error reporting
+
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.errorHandler());
+
+// error reporting
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-// uncomment after placing your favicon in /public
 app.use(cors());
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -45,6 +52,7 @@ app.use((err, req, res, next) => {
 
   // render the error page
   console.error(err);
+  Sentry.captureException(err);
   return sendResponse(
     res,
     err.status || 500,

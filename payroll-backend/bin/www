@@ -3,9 +3,22 @@
 /**
  * Module dependencies.
  */
+
+
 const debug = require('debug')('payroll-backend:server');
 const dotenvResult = require('dotenv').config();
 const http = require('http');
+const { Sentry } = require('../services/errorHandlers');
+
+process.on('uncaughtException', (err) => {
+  Sentry.captureException(err);
+});
+
+process.on('unhandledRejection', (reason) => {
+  const err = reason.stack || reason;
+  Sentry.captureException(err);
+});
+
 const app = require('../app');
 
 if (dotenvResult.error) {
