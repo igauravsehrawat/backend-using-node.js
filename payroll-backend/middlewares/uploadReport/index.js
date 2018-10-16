@@ -2,14 +2,14 @@ const sendResponse = require('../../helpers/sendReponse');
 
 const fileValidator = (req, res, next) => {
   if (!req.file || !req.file.fieldname) {
-    sendResponse(
+    return sendResponse(
       res,
       422,
       {},
       'Please attach a csv file.',
     );
   }
-  next();
+  return next();
 };
 
 module.exports = {
