@@ -47,13 +47,9 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  // console.error(err);
-  winstonLogger.error(err);
+  console.log(err);
+  winstonLogger.error(err.err);
+  winstonLogger.error(err.err && err.err.stack);
   Sentry.captureException(err);
   return sendResponse(
     res,
