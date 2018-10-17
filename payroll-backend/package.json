@@ -5,7 +5,6 @@
   "scripts": {
     "start": "node ./bin/www",
     "debug": "nodemon --inspect ./bin/www",
-    "test": "mocha --exit",
     "jsdoc:generate": "jsdoc helpers/*",
     "apidoc:generate": "apidoc -i controllers/"
   },
@@ -36,9 +35,6 @@
     "eslint": "^5.6.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
-    "expect": "^23.6.0",
-    "mocha": "^5.2.0",
-    "nodemon": "^1.18.4",
-    "supertest": "^3.3.0"
+    "nodemon": "^1.18.4"
   }
 }
