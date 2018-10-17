@@ -1,0 +1,27 @@
+version: '3.5'
+services:
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    restart: always
+    volume:
+      - './DBInit/init.sh:/docker-entrypoint-initdb.d/init.sh'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: veryhardpassword
+    volumes:
+      - '~/payroll-production/data/db:/data/db'
+
+  payroll-backend:
+    depends_on:
+      - "mongo"
+    image: 'payroll-backend:production'
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    restart: always
+    ports:
+      - '8888:8888'
+    volumes:
+      - '.env.prod:/opt/app/.env'

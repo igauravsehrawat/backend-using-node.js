@@ -9,7 +9,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: veryhardpassword
     volumes:
-      - '/root/data/db:/data/db'
+      - '~/payroll/data/db:/data/db'
 
   payroll-backend:
     depends_on:
