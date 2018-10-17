@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 const csvParser = Promise.promisify(require('csv-parse'));
+const isEqual = require('lodash.isequal');
 
 const sendResponse = require('../../helpers/sendReponse');
 const { insertReport } = require('../../services/db/WorkLog');
@@ -59,10 +60,38 @@ const csvParserOptions = {
  * @apiVersion 0.1.0
  */
 
+const checkRequiredFields = (parsedCSV) => {
+  const expectedKeys = ['date', 'hours worked', 'employee id', 'job group'];
+  if (parsedCSV.length > 0) {
+    const firstRow = parsedCSV[0];
+    const rowKeys = Object.values(firstRow);
+    if (!isEqual(expectedKeys, rowKeys)) {
+      return {
+        statusCode: 400,
+        message: 'Wrong format of the CSV',
+      };
+    }
+    return true;
+  }
+  return {
+    statusCode: 400,
+    message: 'Insufficient data',
+  };
+};
+
 const uploadReport = async (req, res) => {
   const fileContent = await fs.readFileAsync(req.file.path, 'utf8');
   await fs.unlinkAsync(req.file.path);
   const parsedCSV = await csvParser(fileContent, csvParserOptions);
+  const hasRequiredFields = checkRequiredFields(parsedCSV);
+  if (hasRequiredFields !== true) {
+    return sendResponse(
+      res,
+      hasRequiredFields.statusCode,
+      {},
+      hasRequiredFields.message,
+    );
+  }
   const rowsCount = parsedCSV.length;
   const lastRowIndex = rowsCount - 1;
   const reportId = parsedCSV[lastRowIndex][1];
