@@ -76,7 +76,7 @@ const uploadReport = async (req, res) => {
     );
   }
   const report = await insertReport(parsedCSV);
-  return sendResponse(res, 200, report, 'Report uploaded successfully.');
+  return sendResponse(res, 201, report, 'Report uploaded successfully.');
 };
 
 module.exports = uploadReport;
