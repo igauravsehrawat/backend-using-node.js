@@ -5,3 +5,6 @@ uploads/
 # docs
 out/
 doc/
+
+# logs
+*.log
