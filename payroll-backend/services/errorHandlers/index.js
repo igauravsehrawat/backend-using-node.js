@@ -13,7 +13,14 @@ const expressErrorHandler = fn => (req, res, next) => fn(req, res, next).catch((
   next({ err });
 });
 
+const errorHandler = fn => (...params) => fn(params).catch((err) => {
+  console.error(err);
+  winstonLogger.error(err.err && err.err.stack);
+  Sentry.captureException(err);
+});
+
 module.exports = {
+  errorHandler,
   expressErrorHandler,
   winstonLogger,
   Sentry,
