@@ -3,14 +3,17 @@ services:
   mongo:
     image: mongo
     ports:
-      - 27017:27017
+      - 27018:27018
     restart: always
-    volume:
-      - './DBInit/init.sh:/docker-entrypoint-initdb.d/init.sh'
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: veryhardpassword
+    # Copy these values from .env file
+      MONGO_INITDB_ROOT_USERNAME:
+      MONGO_INITDB_ROOT_PASSWORD:
+      MONGO_INITDB_DATABASE:
+      MONGO_DB_USER:
+      MONGO_DB_PASSWORD:
     volumes:
+      - './DBInit/createUser.sh:/docker-entrypoint-initdb.d/createUser.sh'
       - '~/payroll-production/data/db:/data/db'
 
   payroll-backend:
@@ -24,4 +27,4 @@ services:
     ports:
       - '8888:8888'
     volumes:
-      - '.env.prod:/opt/app/.env'
+      - '.env:/opt/app/.env'

@@ -6,10 +6,15 @@ services:
       - 27017:27017
     restart: always
     environment:
+    # Copy these values from .env file
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: veryhardpassword
+      MONGO_INITDB_DATABASE: payroll-dev
+      MONGO_DB_USER: dev-user
+      MONGO_DB_PASSWORD: dev-password
     volumes:
-      - '~/payroll/data/db:/data/db'
+      - './DBInit/createUser.sh:/docker-entrypoint-initdb.d/createUser.sh'
+      - '~/payroll-dev/data/db:/data/db'
 
   payroll-backend:
     depends_on:
