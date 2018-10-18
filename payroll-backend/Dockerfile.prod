@@ -8,7 +8,6 @@ WORKDIR /opt/app
 COPY package.json package.json
 RUN npm install
 COPY . .
-COPY
 
 EXPOSE 8888
 
