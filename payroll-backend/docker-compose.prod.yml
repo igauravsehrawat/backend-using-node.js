@@ -3,7 +3,7 @@ services:
   mongo:
     image: mongo
     ports:
-      - 27018:27018
+      - 27018:27017
     restart: always
     environment:
     # Copy these values from .env file
