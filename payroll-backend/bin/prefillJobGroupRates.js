@@ -1,12 +1,4 @@
-const dotenvResult = require('dotenv').config();
-
-if (dotenvResult.error) {
-  console.error('Can not start the app without env variables');
-  process.exit();
-}
-
 const JobGrouRate = require('../models/JobGroupRate');
-
 
 const prefillDataForJobRates = async () => {
   const jobDocs = [];
@@ -24,21 +16,11 @@ const prefillDataForJobRates = async () => {
   jobDocs.push(groupBJob);
   const existingDocs = await JobGrouRate.find({}).lean().exec();
   if (existingDocs.length > 0) {
-    console.info('Seems like there is data already. Exiting out.');
-    process.exit();
+    console.info('Job Group rate data already exists.');
+    return;
   }
-  const insertedDocs = await JobGrouRate.insertMany(jobDocs);
-  return insertedDocs;
+  await JobGrouRate.insertMany(jobDocs);
+  console.info('Job Group rate data inserted');
 };
-
-prefillDataForJobRates()
-  .then((success) => {
-    console.info('success', success);
-    process.exit();
-  })
-  .catch((err) => {
-    console.error('err', err);
-    process.exit();
-  });
 
 module.exports = prefillDataForJobRates;

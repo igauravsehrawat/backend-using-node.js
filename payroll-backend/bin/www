@@ -22,6 +22,9 @@ if (dotenvResult.error) {
   process.exit();
 }
 
+// mandatory app check
+require('./appCheck');
+
 /**
  * Normalize a port into a number, string, or false.
  */
