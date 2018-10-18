@@ -2,8 +2,6 @@ const checkAllEnvironmentVariables = () => {
   const envVars = [
     'ENV',
     'PORT',
-    'MONGO_DB_USER',
-    'MONGO_DB_PASSWORD',
     'MONGO_DB_HOST',
     'MONGO_DB_PORT',
     'DEBUG',
@@ -11,6 +9,8 @@ const checkAllEnvironmentVariables = () => {
     'MONGO_INITDB_ROOT_USERNAME',
     'MONGO_INITDB_ROOT_PASSWORD',
     'MONGO_INITDB_DATABASE',
+    'MONGO_DB_USER',
+    'MONGO_DB_PASSWORD',
   ];
 
   envVars.forEach((item) => {
