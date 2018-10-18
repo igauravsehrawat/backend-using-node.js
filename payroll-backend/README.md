@@ -31,6 +31,11 @@ Run the frontend from frontend repo
 #### Modular and resuable
 + Code is modular, usable and with separation of concern.
 
+#### Database
++ There are two models WorkLog and JobGroupRate.
++ Worklog stores the uploaded data for archival reason and generating payroll report
++ JobGroupRate stores pay per hour rate as per job group. It could have been constants but rates can be modified and added on the fly. This perspective will be huge plus.
++ All models have required fields for proper validation.
 #### Code Guide
 + ESLint is configured and followed very strictly via Airbnb's ESLint with few modifications
 
