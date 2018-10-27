@@ -42,7 +42,12 @@ app.use('/payroll-reports', payrollReports);
 app.use((req, res, next) => {
   const err = new Error('Not Found');
   err.status = 404;
-  next(err);
+  return sendResponse(
+    res,
+    err.status,
+    {},
+    err.message,
+  );
 });
 
 // error handler
