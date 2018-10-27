@@ -26,7 +26,7 @@ mongoose.connection.on('connected', (err) => {
   if (err) {
     console.info('​err', err);
   }
-  console.info('connected');
+  console.info('Mongoose connected.');
 });
 
 mongoose.connection.on('error', (err) => {
@@ -36,5 +36,7 @@ mongoose.connection.on('error', (err) => {
 mongoose.connection.on('disconnected', () => {
   console.info('Mongoose disconnected.');
 });
+
+mongoose.set('debug', process.env.ENV === 'dev');
 
 module.exports = mongoose;
