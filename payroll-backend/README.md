@@ -68,5 +68,5 @@ It is important to setup automation, coding standards and have strong foundation
 As always feedback and suggestions are heartly welcomed.
 
 ### Acknowledgements
-+ Following few of the [guidelines](https://github.com/ashokdey/guidelines/) from the discussion with [Ashok](https://github.com/ashokdey/)
++ Following [guidelines](https://github.com/ashokdey/guidelines/) from the discussion with [Ashok](https://github.com/ashokdey/)
 + Other open source projects
