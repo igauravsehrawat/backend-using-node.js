@@ -1,4 +1,5 @@
 This repository uses node.js and it's ecosystem.
+
 System prerequisites:
 1. Docker
 2. Docker Compose
@@ -52,7 +53,7 @@ Run the frontend from frontend repo
 + Error reporting is done via Sentry.
 
 #### Easy Development
-+ Docker compose configures database and app automatically, no hassle for managing different services.
++ Docker compose configures database and app automatically, no hassle of managing different services.
 
 #### Secure Deployment
 + Deployment and development has been separated by individual environment, docker and docker compose files.
@@ -65,3 +66,7 @@ Run the frontend from frontend repo
 It is important to setup automation, coding standards and have strong foundation early on since more and more people are going to contribute to code base. This will immensely help in reducing/avoiding technical debt.
 
 As always feedback and suggestions are heartly welcomed.
+
+### Acknowledgements
++ Following few of the [guidelines](https://github.com/ashokdey/guidelines/) from the discussion with [Ashok](https://github.com/ashokdey/)
++ Other open source projects

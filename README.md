@@ -1,5 +1,5 @@
 ### Instructions
-Instructions have been provided `payroll-backend` folder.
+Instructions have been provided inside `payroll-backend` folder.
 
 ## Project Description
 
