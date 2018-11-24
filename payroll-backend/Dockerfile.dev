@@ -8,6 +8,6 @@ WORKDIR /opt/app
 COPY package.json package.json
 RUN npm install
 
-EXPOSE 4242
+EXPOSE 4242 9229
 
 ENTRYPOINT ["npm", "run", "debug"]
